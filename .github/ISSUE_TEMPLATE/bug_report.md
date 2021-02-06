@@ -1,8 +1,8 @@
 ---
 name: Problem report
 about: Create a report to help us improve
-title: ''
-labels: ''
+title: 'Problem: <Short Title>'
+labels: 'bug'
 assignees: ''
 
 ---
