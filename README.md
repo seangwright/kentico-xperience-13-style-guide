@@ -34,9 +34,13 @@ We don't provide any recommendation from the perspective of what should be avoid
 
 ## Style Guide
 
-
+The full style guide can be found in [STYLE_GUIDE.md](./STYLE_GUIDE.md)
 
 ## Contributing
+
+If you have topics or ideas you'd like discuss in a less formal way, join us in the [GitHub Discussions](https://github.com/seangwright/kentico-xperience-13-style-guide/discussions) for this project.
+
+If you have a specific problem or feature suggestion, open an issue:
 
 - Problem with an existing recommendation: [Open an Problem Report](https://github.com/seangwright/kentico-xperience-13-style-guide/issues/new?template=bug_report.md)
 - Suggestion for a new area not covered by this guide: [Open a Feature Request](https://github.com/seangwright/kentico-xperience-13-style-guide/issues/new?template=feature_request.md)
