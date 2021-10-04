@@ -1,0 +1,29 @@
+{
+  "name": "kentico-xperience-13-style-guide",
+  "version": "1.0.0",
+  "description": "A guide to help developers build better and more consistent Kentico Xperience applications",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seangwright/kentico-xperience-13-style-guide.git"
+  },
+  "keywords": [
+    "xperience",
+    "kentico",
+    "cms"
+  ],
+  "author": "Sean G. Wright <sean@seangwright.me> (https://www.seangwright.me)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seangwright/kentico-xperience-13-style-guide/issues"
+  },
+  "homepage": "https://github.com/seangwright/kentico-xperience-13-style-guide#readme",
+  "devDependencies": {
+    "vitepress": "^0.19.2"
+  }
+}
