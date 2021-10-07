@@ -1,0 +1,34 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "docs:dev",
+      "problemMatcher": [],
+      "label": "npm: docs:dev",
+      "detail": "vitepress dev docs"
+    },
+    {
+      "type": "npm",
+      "script": "install",
+      "problemMatcher": [],
+      "label": "npm: install",
+      "detail": "install dependencies from package"
+    },
+    {
+      "type": "npm",
+      "script": "docs:build",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: docs:build",
+      "detail": "vitepress build docs"
+    },
+    {
+      "type": "npm",
+      "script": "docs:serve",
+      "problemMatcher": [],
+      "label": "npm: docs:serve",
+      "detail": "vitepress serve docs"
+    }
+  ]
+}
