@@ -1,5 +1,6 @@
 {
   "single-title": {
     "front_matter_title": ""
-  }
+  },
+  "line-length": false
 }
