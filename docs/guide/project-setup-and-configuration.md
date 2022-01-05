@@ -1,21 +1,49 @@
 # Project Setup and Configuration
 
-## MS Build
+## Documentation
+
+### <EssentialIcon /> Add a Repository README.md
+
+- Add a `README.md`
+
+### <ConsiderIcon /> Maintain an Architectural Decision Record (ADR)
+
+- Add an Architectural Decision Record
+
+## .NET and C\#
+
+### <EssentialIcon /> Use the Latest Target Frameworks for Applications
+
+### <EssentialIcon /> Use .NET Standard 2.0 for Shared Libraries
+
+### <EssentialIcon /> Directory.Build.props for Shared Configuration
+
+- Use `Directory.Build.props`
+
+### <EssentialIcon /> Enable Nullable Reference Types
 
 - Enable `<nullable>enable</nullable>`
 - Enable `<WarningsAsErrors>nullable</WarningsAsErrors>`
-- Use `.editorconfig` and Roslyn Analyzers
-- Use `Directory.Build.props`
 
-## Structure
+### <ConsiderIcon /> Use EditorConfig for Consistent C\#
+
+- Use `.editorconfig` and Roslyn Analyzers
+
+## Project Structure
+
+### <ConsiderIcon /> Co-Locate Tests and Libraries
 
 - Keep tests next to projects in Solution
+
+### <EssentialIcon /> Feature Folders (Vertical Slice Architecture)
+
 - Follow Feature Folder (or Vertical Slice) code organization
   - Avoid organizing by type (Model, Interface, Provider/Service)
+
+### <ConsiderIcon /> Multiple Coupled Types per-file
+
 - Keep coupled classes/types in the same file
+
+### <EssentialIcon /> Co-Locate Controllers, View Models, and Views
+
 - Organize Views and Models next to their Controller/View Component classes
-
-## Docs
-
-- Add a `README.md`
-- Add an Architectural Decision Record

@@ -2,26 +2,23 @@ import type {
   SidebarConfig,
   SidebarGroupCollapsible,
 } from '@vuepress/theme-default';
-import { path } from '@vuepress/utils';
-import { readdirSync } from 'fs';
 
 export function generateSidebar(): SidebarConfig {
-  const guidePath = path.resolve(__dirname, '../guide/');
-
-  const files = readdirSync(guidePath);
-
-  const items: SidebarGroupCollapsible[] = [
+  const guideItems: SidebarGroupCollapsible[] = [
     {
       text: 'Guide',
-      collapsible: true,
-      children: files
-        .sort(readmeFirstThenAlphabetical)
-        .map((f) => `/guide/${f}`),
+      children: [
+        '/guide/README.md',
+        '/guide/project-setup-and-configuration.md',
+        '/guide/aspnet-core.md',
+        '/guide/content-modeling.md',
+        '/guide/page-types.md',
+      ],
     },
   ];
 
   return {
-    '/guide/': items,
+    '/guide/': guideItems,
   };
 }
 

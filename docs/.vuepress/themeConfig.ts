@@ -1,6 +1,6 @@
 import { ThemeConfig } from 'vuepress-vite';
-import { generateSidebar } from './auto-sidebar';
 import { generateNavbar } from './navbar';
+import { generateSidebar } from './sidebar';
 
 export function themeConfig(isProd: boolean): ThemeConfig {
   return {
