@@ -11,7 +11,7 @@
 ## Optimizations
 
 - Avoid N+1 querying
-- Use `.Columns()` to improve query peformance
+- Use `.Columns()` to improve query performance
 
 ## Refactoring
 

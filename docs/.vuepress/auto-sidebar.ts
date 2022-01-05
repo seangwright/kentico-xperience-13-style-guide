@@ -1,4 +1,7 @@
-import type { SidebarConfig } from '@vuepress/theme-default';
+import type {
+  SidebarConfig,
+  SidebarGroupCollapsible,
+} from '@vuepress/theme-default';
 import { path } from '@vuepress/utils';
 import { readdirSync } from 'fs';
 
@@ -7,15 +10,18 @@ export function generateSidebar(): SidebarConfig {
 
   const files = readdirSync(guidePath);
 
+  const items: SidebarGroupCollapsible[] = [
+    {
+      text: 'Guide',
+      collapsible: true,
+      children: files
+        .sort(readmeFirstThenAlphabetical)
+        .map((f) => `/guide/${f}`),
+    },
+  ];
+
   return {
-    '/guide/': [
-      {
-        text: 'Guide',
-        children: files
-          .sort(readmeFirstThenAlphabetical)
-          .map((f) => `/guide/${f}`),
-      },
-    ],
+    '/guide/': items,
   };
 }
 
