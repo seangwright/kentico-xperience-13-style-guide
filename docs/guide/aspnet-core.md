@@ -12,6 +12,10 @@
 
 - Use fluent patterns for `ConfigureServices` and `Configure`
 
+### <ConsiderIcon /> Group Extensions Based on Sub-System
+
+- Extensions tell a story about what features your app has
+
 ### <EssentialIcon /> Use Reflection vs Manual DI Registration
 
 - Use reflection for registering types with many implementations

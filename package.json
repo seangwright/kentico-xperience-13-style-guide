@@ -7,6 +7,9 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
+  "engines": {
+    "node": ">=16.13.1 <17"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/seangwright/kentico-xperience-13-style-guide.git"

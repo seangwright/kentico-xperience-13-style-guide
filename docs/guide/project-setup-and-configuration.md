@@ -10,11 +10,17 @@
 
 - Add an Architectural Decision Record
 
+### <ConsiderIcon /> Add XML Doc Comments
+
+### <ConsiderIcon /> Commit SQL Scripts
+
 ## .NET and C\#
 
 ### <EssentialIcon /> Use the Latest Target Frameworks for Applications
 
 ### <EssentialIcon /> Use .NET Standard 2.0 for Shared Libraries
+
+### <EssentialIcon /> Use SDK-Style Projects
 
 ### <EssentialIcon /> Directory.Build.props for Shared Configuration
 
@@ -30,6 +36,12 @@
 - Use `.editorconfig` and Roslyn Analyzers
 
 ## Project Structure
+
+### <EssentialIcon /> Create Solution Items Folder
+
+### <ConsiderIcon /> Create Build Folder
+
+### <ConsiderIcon /> Create Source Folder
 
 ### <ConsiderIcon /> Co-Locate Tests and Libraries
 

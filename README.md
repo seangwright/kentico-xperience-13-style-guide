@@ -44,3 +44,8 @@ If you have a specific problem or feature suggestion, open an issue:
 
 - Problem with an existing recommendation: [Open an Problem Report](https://github.com/seangwright/kentico-xperience-13-style-guide/issues/new?template=bug_report.md)
 - Suggestion for a new area not covered by this guide: [Open a Feature Request](https://github.com/seangwright/kentico-xperience-13-style-guide/issues/new?template=feature_request.md)
+
+## Made With
+
+[VuePress 2](https://v2.vuepress.vuejs.org)
+[heroicons](https://heroicons.com/)

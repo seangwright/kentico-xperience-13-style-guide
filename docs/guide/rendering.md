@@ -2,8 +2,14 @@
 
 ## ASP.NET Core
 
-- Default to using Page Templates (+ View Components)
+### <SuggestIcon /> Default to using Page Templates (+ View Components)
 
 ## Page Types
 
-- Use "Route to View" or "Route to Page Template" with Content Tree based routing
+### <SuggestIcon /> Use "Route to View" or "Route to Page Template" with Content Tree based routing
+
+## Razor
+
+### <EssentialIcon /> Keep View Injected Dependencies Minimal
+
+### <EssentialIcon /> Break up Layout Into Smaller View Components
