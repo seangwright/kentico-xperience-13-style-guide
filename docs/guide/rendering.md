@@ -2,11 +2,11 @@
 
 ## ASP.NET Core
 
-### <SuggestIcon /> Default to using Page Templates (+ View Components)
+### <ConsiderIcon /> Default to using Page Templates (+ View Components)
 
 ## Page Types
 
-### <SuggestIcon /> Use "Route to View" or "Route to Page Template" with Content Tree based routing
+### <ConsiderIcon /> Use "Route to View" or "Route to Page Template" with Content Tree based routing
 
 ## Razor
 

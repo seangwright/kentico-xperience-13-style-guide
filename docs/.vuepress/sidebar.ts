@@ -13,6 +13,9 @@ export function generateSidebar(): SidebarConfig {
         '/guide/aspnet-core.md',
         '/guide/content-modeling.md',
         '/guide/page-types.md',
+        '/guide/page-builder.md',
+        '/guide/querying.md',
+        '/guid/platform-customization.md',
       ],
     },
   ];

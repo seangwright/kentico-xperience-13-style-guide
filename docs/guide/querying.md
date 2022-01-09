@@ -41,6 +41,6 @@
   - Optimizes caching
   - Only retrieved data is accessible (`TreeNode` is a dynamic container)
 
-### <SuggestIcon /> Use Result Container for Querying
+### <ConsiderIcon /> Use Result Container for Querying
 
-### <SuggestIcon /> Model Missing Data with Maybe/Option Container
+### <ConsiderIcon /> Model Missing Data with Maybe/Option Container

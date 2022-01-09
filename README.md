@@ -49,3 +49,4 @@ If you have a specific problem or feature suggestion, open an issue:
 
 [VuePress 2](https://v2.vuepress.vuejs.org)
 [heroicons](https://heroicons.com/)
+[Netlify](https://www.netlify.com/)
