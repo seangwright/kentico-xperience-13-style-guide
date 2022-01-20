@@ -2,6 +2,8 @@
 
 ![Kentico Xperience](./images/kx-logo-by-kentico-hor-color-pos-sz-rgb.png)
 
+📑 [Read the Style Guide](https://romantic-wescoff-73e541.netlify.app/)
+
 This style guide is the result of observations that the Kentico Xperience community has on building applications with Xperience.
 
 It's a high level collection of (slightly) opinionated recommendations, considerations, and avoidances that a developer should follow when working on a Kentico Xperience project.
