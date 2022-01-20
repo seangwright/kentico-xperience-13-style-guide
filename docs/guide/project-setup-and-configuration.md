@@ -59,22 +59,44 @@ An ADR entry should include details about an architectural decision. If there we
 
 ### <ConsiderIcon /> Add XML Doc Comments
 
-- Doc comments can help generate human-readable descriptions for [HTTP API documentation](https://github.com/domaindrivendev/Swashbuckle.AspNetCore#include-descriptions-from-xml-comments)
-- Comments that clearly describe what something is and why it exists, while avoiding describing _how_ it works, can help developers using those types and methods from needing to explore the source code
-- The [XML doc comment syntax is powerful](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags)
+- Use the [powerful XML doc comment syntax](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags) to annotate types, methods, and properties
 
 **Why?**
 
-Swagger API documentation for HTTP/REST APIs has become a standard in most enterprise web applications. XML doc comments helps to make these auto-generated pages more useful.
+Swagger API documentation for HTTP/REST APIs has become a standard in most enterprise web applications. XML doc comments helps to make these auto-generated pages [more useful with human readable descriptions](https://github.com/domaindrivendev/Swashbuckle.AspNetCore#include-descriptions-from-xml-comments).
 
 **Why?**
 
-A type name can give a developer a hint as to _what_ a type is (ex: `IPageRetriever`), but the name alone might not indicate _when_ or _why_ a type or method should be used. XML doc comments are a great place to add these explanations.
+A type name can give a developer a hint as to _what_ a type is (ex: `IPageRetriever`), but the name alone might not indicate _when_ or _why_ a type or method should be used. XML doc comments are a great place to add these explanations. Comments that clearly describe what something is and why it exists, while avoiding describing _how_ it works, can help developers using those types and methods from needing to explore the source code.
 
 **Why?**
 
 Method overloading is a useful C# feature, but variations on parameter lists can
-be difficult to understand without XML doc comments.
+be difficult to understand without XML doc comments detailing what parameters are used for.
+
+**Why?**
+
+Proper use of XML doc comments can be refactor-proof when refering to other code as symbols instead of strings (ex `<see cref="SomeType" />`).
+
+```csharp
+/// <summary>
+/// Validates URls based on the configuration supplied by <see cref="URLConfiguration" />
+/// </summary>
+public class URLValidator
+{
+    private readonly URLConfiguration config;
+
+    public URLValidator(IOptions<URLConfiguration> config) =>
+      this.config = config.Value;
+
+    // more methods
+}
+```
+
+::: tip
+In the above code, renaming `URLConfiguration` using Visual Studio's refactoring feature (`f2`) will ensure the XML doc comment
+on `URLValidator` has the referenced type renamed as well.
+:::
 
 ### <EssentialIcon /> Commit SQL Scripts
 
@@ -129,7 +151,24 @@ Despite the Content Management and Content Delivery apps being built on differen
 
 ### <EssentialIcon /> Use SDK-Style Projects
 
-### <EssentialIcon /> Directory.Build.props for Shared Configuration
+- Create new class libraries using the [.NET CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/) using the `dotnet new` command or the Visual Studio `File -> New Project` UI.
+- Ensure the new class library `.csproj` file beings with `<Project Sdk="Microsoft.NET.Sdk">`
+
+**Why?**
+
+All modern .NET Core/.NET 5+ projects use the SDK-Style Project format which includes [a large number of improvments and new features](https://github.com/dotnet/project-system/blob/main/docs/feature-comparison.md) when compared with the project format of older .NET 4.x projects. Some of these features, like hand editable `.csproj` files that can be edited without 'unloading' projects in Visual Studio, are welcomed conveniences. Others, like properly tracked transitive NuGet package references, make the difference between applications that do and do not function correctly when run. Even `.netstandard2.0` class libraries can use the new SDK-Style projects.
+
+**Why?**
+
+.NET Developers have had a history of being intimidated by `.csproj` files which were meant to be managed by tooling in Visual Studio. SDK-Style projects are meant to be manageable by and approachable to both new and experienced .NET developers.
+
+::: warning
+
+The CMS .NET 4.8 ASP.NET Web Forms application does not support the SDK-Style project format, however [it can support](https://dev.to/seangwright/kentico-12-class-libraries-with-modern-net-core-features-34n5) the modern NuGet `<PackageReference>` syntax.
+
+:::
+
+### <EssentialIcon /> Directory.Build.props / Directory.Build.targets for Shared Configuration
 
 - Use `Directory.Build.props`
 
@@ -153,6 +192,8 @@ Despite the Content Management and Content Delivery apps being built on differen
 ### <ConsiderIcon /> Co-Locate Tests and Libraries
 
 - Keep tests next to projects in Solution
+
+### <ConsiderIcon /> Use Source Link for NuGet Packaged Libraries
 
 ### <EssentialIcon /> Feature Folders (Vertical Slice Architecture)
 
