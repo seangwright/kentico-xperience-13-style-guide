@@ -168,14 +168,70 @@ The CMS .NET 4.8 ASP.NET Web Forms application does not support the SDK-Style pr
 
 :::
 
-### <EssentialIcon /> Directory.Build.props / Directory.Build.targets for Shared Configuration
-
-- Use `Directory.Build.props`
-
 ### <EssentialIcon /> Enable Nullable Reference Types
 
-- Enable `<nullable>enable</nullable>`
-- Enable `<WarningsAsErrors>nullable</WarningsAsErrors>`
+- Turn on compiler analysis for [nullable reference types](https://docs.microsoft.com/en-us/dotnet/csharp/nullable-references) for any project supporting C# 8 or above
+- Add `<nullable>enable</nullable>` to a `<PropertyGroup>` in your `.csproj` file to enable nullable reference types
+- Add `<WarningsAsErrors>nullable</WarningsAsErrors>` to a `<PropertyGroup>` in your `.csproj` file to treat nullable reference type warnings as compilation errors
+
+**Why?**
+
+One of the most common exceptions developers encounter in their code is the `NullReferenceException`. This typically happens
+because of C#'s **implicit** [type union](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types) of all [reference types](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types) and the value `null`. The compiler
+can't tell the developer that a value might be null before it is used, so developers are forced to add checks themselves. It's easy to forget these checks which leads to the exceptions are runtime.
+
+Enabling nullable reference types makes the type union of reference types and `null` **explicit**, which means the compiler can
+alert us when we haven't guarded against `null` values.
+
+**Why?**
+
+Nullable reference types were a C# language feature enhancement to help developers catch errors at compile time. By default, the compiler will
+treat missing null checks or nullable type mismatches as warnings, but those defeat the purpose of using the compiler to help us write
+more robust code. By having the compiler emit errors instead of warnings, we ensure we are getting the most protection for our
+application with this feature.
+
+### <EssentialIcon /> Directory.Build.props / Directory.Build.targets for Shared Configuration
+
+- In the root of your repository, create a `Directory.Build.props` file for shared project configuration
+- In the root of your repository, create a `Directory.Build.targets` file for shared project build actions
+
+**Why?**
+
+`Directory.Build.props` and `Directory.Build.targets` are a convenient way to [define common MSBuild properties and behavior](https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2022#directorybuildprops-and-directorybuildtargets)
+in a single location. While these files are most useful in libaries that are shared via NuGet packages, applications can also benefit from them.
+
+Adding the following to a `Directory.Build.props` would enable [nullable reference types](https://docs.microsoft.com/en-us/dotnet/csharp/nullable-references) for the entire solution and ensure any nullability warnings are treated as compilation errors:
+
+::: tip Directory.Build.props
+
+```xml
+<PropertyGroup>
+  <Nullable>enable</Nullable>
+  <WarningsAsErrors>nullable</WarningsAsErrors>
+</PropertyGroup>
+```
+
+:::
+
+**Why?**
+
+If you embed ownership metadata in your compiled assemblies, having to repeat this metadata in every `.csproj` file
+can be tedious and error prone. Instead it can be specified in `Directory.Build.props` and applied to all projects:
+
+::: tip Directory.Build.props
+
+```xml
+<PropertyGroup>
+  <Company>Your Company</Company>
+  <Authors>$(Company)</Authors>
+  <Copyright>Copyright © $(Company) $([System.DateTime]::Now.Year)</Copyright>
+  <Trademark>$(Company)™</Trademark>
+  <Product>$(Company) - Your Project</Product>
+  <VersionPrefix>1.0.0</VersionPrefix>
+</PropertyGroup>
+```
+
+:::
 
 ### <ConsiderIcon /> Use EditorConfig for Consistent C\#
 
@@ -185,20 +241,74 @@ The CMS .NET 4.8 ASP.NET Web Forms application does not support the SDK-Style pr
 
 ### <EssentialIcon /> Create Solution Items Folder
 
+- Add a new [folder in your .NET solution](https://docs.microsoft.com/en-us/visualstudio/ide/solutions-and-projects-in-visual-studio?view=vs-2022#solution-folder) to contain items at the root of your project that should be visible in Visual Studio
+- It's common to name this folder `Solution Items`
+
+**Why?**
+
+.NET solutions have traditionally focused on source code and projects since they are a target for compilation. However,
+it's also common to have many files in a .NET repository that are not code or projects, like [README.md](#add-a-repository-readme-md) and `.gitignore` files. These should be viewable and editable in the same way that source code is editable. Having these files visible (in Visual Studio or Rider) makes them more likely to be edited and kept up to date.
+
+**Why?**
+
+Having a solution folder with a convention-based name makes it easier for developers to explore a project and find common non-code files.
+
 ### <ConsiderIcon /> Create Build Folder
 
 ### <ConsiderIcon /> Create Source Folder
 
 ### <ConsiderIcon /> Co-Locate Tests and Libraries
 
-- Keep tests next to projects in Solution
+- In a .NET solution, keep test projects adjacent to the applications and libraries they are associated with
+- Create a solution folder for each project and place both the application (or library) and its test project in the solution folder
+
+**Why?**
+
+By co-locating tests and the source the tests were written for, the tests and code are more likely to stay in-sync.
+
+**Why?**
+
+Developers will be more likely to keep testing in mind when adding new features if they are reminded there is a place to add
+tests in the solution and they don't have to go hunt down the correct test project.
+
+**Why?**
+
+Solution folders are a virtual organizational tool for .NET projects. This means source code and test code can still
+be located in different paths on the file system (ex: `src/` and `test/`) even if they are co-located in the solution.
 
 ### <ConsiderIcon /> Use Source Link for NuGet Packaged Libraries
 
 ### <EssentialIcon /> Feature Folders (Vertical Slice Architecture)
 
-- Follow Feature Folder (or Vertical Slice) code organization
-  - Avoid organizing by type (Model, Interface, Provider/Service)
+- Create folders in a .NET project based on a feature
+- Organize and architect classes to be feature-oriented
+
+**Why?**
+
+Developers work on features so organizing code by feature helps developers find many of
+the pieces of code they need to modify when working on a feature. If they need to create new code for a feature,
+it's obvious, based on the feature-oriented organization, where that code should go in a project.
+
+**Why?**
+
+Projects organized by features are more comprehensible because the feature folders end up being
+a list of the application's main entrypoints an functionality. The feature folders also aid in revealing
+the complexity level of a given feature compared to another.
+
+**Why?**
+
+Feature folders encourage developers to think about functionality as a [Vertical Slice](https://codeopinion.com/restructuring-to-a-vertical-slice-architecture/), which is an architecture that leads to features
+that are easier to work on without incurring regressions elsewhere in an application. Vertical slices are also
+easier to separate into their own applications if they end up having unique scalability or deployment requirements.
+
+::: danger Avoid organizing by type
+
+Developers are never tasked to work on "interfaces" or "view models". Instead they are tasked with
+resolving issues or creating new functionality for features. Organizing code by what 'type' of a thing
+it is (ex: "interface", "implementation", "factory", "view model") focuses too much on a somewhat arbitrary
+technical detail, while the real focus in a codebase should be on business use-case.
+
+:::
 
 ### <ConsiderIcon /> Multiple Coupled Types per-file
 
@@ -206,4 +316,32 @@ The CMS .NET 4.8 ASP.NET Web Forms application does not support the SDK-Style pr
 
 ### <EssentialIcon /> Co-Locate Controllers, View Models, and Views
 
-- Organize Views and Models next to their Controller/View Component classes
+- Place Controllers, View Models, and Views all in the same [feature folder](#feature-folders-vertical-slice-architecture)
+- Move the `_ViewImports.cshtml` and `_ViewStart.cshtml` files to the root of the ASP.NET Core project so they are
+  accessible to Views outside the `~/Views` folder
+- Optional: Define Controllers (or View Component classes) and their View Model classes in the same file
+- Optional: [Customize a ViewLocationExpander](<http://devtrev.com/Trev-Tips-(Blog)/January-20201/Enabling-Feature-Folders-Custom-View-Paths-in-Xp>) to help MVC understand the conventions for your project structure
+
+**Why?**
+
+The majority of code in an ASP.NET Core MVC application is related to presentation of information.
+Models, Views, and Controllers are all presentation concerns and are all edited together - a change in a View Model typically results
+in a change in both a Controller and View. By co-locating these files we aren't breaking some rule of 'separation of concerns'
+since all of these files are for the same (presentation) concern. Instead we are making our lives easier when working
+in the project since we won't need to jump around the project folder hierarchy every time we make a change to presentation functionality.
+
+**Why?**
+
+Most developers working on a Kentico Xperience application won't only work in C# files or Razor Views - we tend to
+have responsibilities for all areas of content presentation. Separating Views into their own folder creates
+an artifical barrier that doesn't align with developer workloads.
+
+**Why?**
+
+View Models only exist to pass data from Controllers (and View Component classes) to Views. They are never used
+outside of this role and they are typically unique to a Controller/View pair. This means these files are all tightly coupled.
+While too many lines of code in a single file _can_ be a code smell, this is typically only when a single unit of encapsulation (class, method)
+has too many lines.
+
+There's nothing wrong with defining multiple classes in the same file, especially when they are tightly coupled, and co-locating
+them will help increase developer productivity when working on these types.
