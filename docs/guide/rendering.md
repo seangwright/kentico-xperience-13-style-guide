@@ -13,3 +13,8 @@
 ### <EssentialIcon /> Keep View Injected Dependencies Minimal
 
 ### <EssentialIcon /> Break up Layout Into Smaller View Components
+
+### <EssentialIcon /> View Components vs Partial Views
+
+- Leverage View Components over Partial Views
+  - Better type checking, intellisense
