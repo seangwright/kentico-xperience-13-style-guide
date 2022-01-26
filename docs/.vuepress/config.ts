@@ -25,7 +25,6 @@ export default defineUserConfig<DefaultThemeOptions>({
     (isProd ? '@vuepress/webpack' : '@vuepress/vite'),
 
   plugins: [
-    ['@vuepress/plugin-debug'],
     [
       '@vuepress/plugin-docsearch',
       {
