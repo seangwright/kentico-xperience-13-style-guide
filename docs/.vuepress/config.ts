@@ -7,7 +7,7 @@ import { themeConfig } from './themeConfig';
 const isProd = process.env.NODE_ENV === 'production';
 
 export default defineUserConfig<DefaultThemeOptions>({
-  base: '/',
+  base: '/kentico-xperience-13-style-guide/',
 
   lang: 'en-US',
   title: 'Kentico Xperience 13 Community Style Guide',
