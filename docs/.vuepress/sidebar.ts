@@ -15,6 +15,7 @@ export function generateSidebar(): SidebarConfig {
         '/guide/page-types.md',
         '/guide/page-builder.md',
         '/guide/querying.md',
+        '/guide/rendering.md',
         '/guide/platform-customization.md',
       ],
     },
