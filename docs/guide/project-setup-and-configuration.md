@@ -16,7 +16,7 @@ New developers on the project will reference a `README.md` to orient themselves 
 
 **Why?**
 
-Having project information in a `README.md` that exists in the project's repository (co-located) increases the likihood of the information
+Having project information in a `README.md` that exists in the project's repository (co-located) increases the likelihood of the information
 being kept up to date as the project changes.
 
 ### <ConsiderIcon /> Enhance the README.md
@@ -55,7 +55,7 @@ Business rule and project requirement changes are often recorded by project mana
 
 **Why?**
 
-An ADR entry should include details about an architectural decision. If there were multiple solutions available, the entry shouldd describe each one, including their pros/cons, and why the chosen solution was selected. Writing out this decision making process can help reflect on the _why_ of a change and expressing explicitly any implications of the solution.
+An ADR entry should include details about an architectural decision. If there were multiple solutions available, the entry should describe each one, including their pros/cons, and why the chosen solution was selected. Writing out this decision making process can help reflect on the _why_ of a change and expressing explicitly any implications of the solution.
 
 ### <ConsiderIcon /> Add XML Doc Comments
 
@@ -76,7 +76,7 @@ be difficult to understand without XML doc comments detailing what parameters ar
 
 **Why?**
 
-Proper use of XML doc comments can be refactor-proof when refering to other code as symbols instead of strings (ex `<see cref="SomeType" />`).
+Proper use of XML doc comments can be refactor-proof when referring to other code as symbols instead of strings (ex `<see cref="SomeType" />`).
 
 ```csharp
 /// <summary>
@@ -103,10 +103,15 @@ on `URLValidator` has the referenced type renamed as well.
 - Create a documentation folder in the repository and add dated SQL scripts to it
 - These scripts should be documented with comments and detail one time data migrations or imports
 - They can be linked to from an [ADR](#maintain-architectural-decision-records-adr)
+- Include Kentico Xperience Hotfix scripts
 
 **Why?**
 
-The impact of changes to the database are not visible through source control, so it can be difficult to determine when or why changes to data/schema were made from SQL. Commited scripts help match these changes with related code changes at a given point in time.
+The impact of changes to the database are not visible through source control, so it can be difficult to determine when or why changes to data/schema were made from SQL. Committed scripts help match these changes with related code changes at a given point in time.
+
+**Why?**
+
+Some Kentico Xperience 13 hotfixes include SQL scripts that the [KIM or Hotfix Utility](https://docs.xperience.io/external-utilities/kentico-xperience-hotfix-and-upgrade-utility) will apply for you. However, in production environments these should be applied manually (or through CI/CD automation) and having them documented in the repository makes them easily accessible.
 
 **Why?**
 
@@ -156,7 +161,7 @@ Despite the Content Management and Content Delivery apps being built on differen
 
 **Why?**
 
-All modern .NET Core/.NET 5+ projects use the SDK-Style Project format which includes [a large number of improvments and new features](https://github.com/dotnet/project-system/blob/main/docs/feature-comparison.md) when compared with the project format of older .NET 4.x projects. Some of these features, like hand editable `.csproj` files that can be edited without 'unloading' projects in Visual Studio, are welcomed conveniences. Others, like properly tracked transitive NuGet package references, make the difference between applications that do and do not function correctly when run. Even `.netstandard2.0` class libraries can use the new SDK-Style projects.
+All modern .NET Core/.NET 5+ projects use the SDK-Style Project format which includes [a large number of improvements and new features](https://github.com/dotnet/project-system/blob/main/docs/feature-comparison.md) when compared with the project format of older .NET 4.x projects. Some of these features, like hand editable `.csproj` files that can be edited without 'unloading' projects in Visual Studio, are welcomed conveniences. Others, like properly tracked transitive NuGet package references, make the difference between applications that do and do not function correctly when run. Even `.netstandard2.0` class libraries can use the new SDK-Style projects.
 
 **Why?**
 
@@ -198,7 +203,7 @@ application with this feature.
 **Why?**
 
 `Directory.Build.props` and `Directory.Build.targets` are a convenient way to [define common MSBuild properties and behavior](https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2022#directorybuildprops-and-directorybuildtargets)
-in a single location. While these files are most useful in libaries that are shared via NuGet packages, applications can also benefit from them.
+in a single location. While these files are most useful in libraries that are shared via NuGet packages, applications can also benefit from them.
 
 Adding the following to a `Directory.Build.props` would enable [nullable reference types](https://docs.microsoft.com/en-us/dotnet/csharp/nullable-references) for the entire solution and ensure any nullability warnings are treated as compilation errors:
 
@@ -332,7 +337,7 @@ it's obvious, based on the feature-oriented organization, where that code should
 **Why?**
 
 Projects organized by features are more comprehensible because the feature folders end up being
-a list of the application's main entrypoints an functionality. The feature folders also aid in revealing
+a list of the application's main entry points an functionality. The feature folders also aid in revealing
 the complexity level of a given feature compared to another.
 
 **Why?**
@@ -370,7 +375,7 @@ in the project since we won't need to jump around the project folder hierarchy e
 
 Most developers working on a Kentico Xperience application won't only work in C# files or Razor Views - we tend to
 have responsibilities for all areas of content presentation. Separating Views into their own folder creates
-an artifical barrier that doesn't align with developer workloads.
+an artificial barrier that doesn't align with developer workloads.
 
 **Why?**
 
@@ -397,7 +402,7 @@ Today, [C# record types](https://docs.microsoft.com/en-us/dotnet/csharp/whats-ne
 
 **Why?**
 
-Co-locating code that changes together is always preferrable over spreading this code across a project. Similar to how [feature folder](#feature-folders-vertical-slice-architecture) improve productivity, including related types in the same file can make them easier to find, understand, and edit.
+Co-locating code that changes together is always preferable over spreading this code across a project. Similar to how [feature folder](#feature-folders-vertical-slice-architecture) improve productivity, including related types in the same file can make them easier to find, understand, and edit.
 
 Editors also include shortcuts to quickly navigate to a symbol, which can be much faster than visually navigating through a folder structure
 to find a file.

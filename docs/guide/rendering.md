@@ -4,7 +4,9 @@
 
 ### <ConsiderIcon /> Default to using Page Templates (+ View Components)
 
-- <NoteIcon /> If you use Page Templates for a Page Type, and don't have a fallback Razor View for [Basic Routing](https://docs.xperience.io/developing-websites/implementing-routing/content-tree-based-routing/setting-up-content-tree-based-routing#Settingupcontenttreebasedrouting-Basic), then any Pages of this Page Type defined through the API will need to have their `DocumentPageTemplateConfiguration` field manually set with a valid value.
+<NoteIcon />
+
+If you use Page Templates for a Page Type, and don't have a fallback Razor View for [Basic Routing](https://docs.xperience.io/developing-websites/implementing-routing/content-tree-based-routing/setting-up-content-tree-based-routing#Settingupcontenttreebasedrouting-Basic), then any Pages of this Page Type defined through the API will need to have their `DocumentPageTemplateConfiguration` field manually set with a valid value.
 
 :::tip Assigning a Page Template to a Page Programmatically
 
