@@ -10,7 +10,12 @@
 
 **Why?**
 
+Since Global Events can be handled in any Custom Module class, the logic for handling these events can accidentally be spread
+all over a code base. By creating one Custom Module per Object Type, we centralize handling for events for those objects.
+
 **Why?**
+
+Centralized event handling is easier to debug and abides by the [principle of lease surprise](https://ardalis.com/principle-of-least-surprise/) because disabling a single module should disable all custom event handling for that object type.
 
 ### <ConsiderIcon /> Single Module for All Document and Workflow Events
 
@@ -127,13 +132,11 @@ namespace Sandbox.Xperience.Common
 }
 ```
 
-### <ConsiderIcon /> Encapsulate 'Well Known' System Objects in a Class
+### <ConsiderIcon /> Encapsulate 'Well Known' System Objects in an Immutable Class
 
-- Create a `readonly` class to hold the identifiers for the system object identifiers and names
+- Create an immutable class to hold the identifiers for the system object identifiers and names
 - Add static properties for each well known object
 - Add an `All` object to contain the set of all static property instances of the class
-
-**Why?**
 
 ```csharp
 public class TopLevelPage
@@ -155,11 +158,52 @@ public class TopLevelPage
 }
 ```
 
+**Why?**
+
+`Guid` values are stable across environments, so they are safe to hardcode into an application.
+Surrounding this value in an immutable class (one with a `protected` constructor and non-writable properties) ensures
+these values are not accidentally changed by the application and gives them friendly names for developers to refer to them by.
+
+**Why?**
+
+Creating an `All` property makes it easy to programmatically check all the static class instance properties. This is helpful
+for guarding against accidental deletion of objects the application requires to function correctly (see [Protect Required Data from Deletion](#protect-required-data-from-deletion))
+
 ### <EssentialIcon /> Protect Required Data from Deletion
 
 - In a [Custom Module](https://docs.xperience.io/custom-development/creating-custom-modules) handle the Delete [Global Events](https://docs.xperience.io/custom-development/handling-global-events/reference-global-system-events) for a type that the system depends on
 - Check if the object can safely be deleted
 - Cancel the event and throw an exception if it cannot be deleted
+
+```csharp
+[assembly: RegisterModule(typeof(PageGlobalEventsModule))]
+
+namespace Sandbox.Xperience.Common
+{
+    public class PageGlobalEventsModule : Module
+    {
+        public PageGlobalEventsModule() : base(nameof(PageGlobalEventsModule)) { }
+
+        protected override void OnInit()
+        {
+            base.OnInit();
+
+            DocumentEvents.Delete.Before += Delete_Before;
+        }
+
+        private void Delete_Before(object sender, DocumentEventArgs e)
+        {
+            if (TopLevelPage.All.Any(p => p.NodeGUID == e.Document.NodeGUID))
+            {
+                e.Cancel();
+
+                throw new Exception(
+                    $"Cannot delete Page [{e.Document.DocumentName}] because it is required by the application.")
+            }
+        }
+    }
+}
+```
 
 **Why?**
 
@@ -170,6 +214,10 @@ We need to prevent this data from being deleted accidentally and Global Events p
 the deletion process and stop if the data needs to exist for the site to function properly.
 
 **Why?**
+
+Throwing an exception after canceling the deletion event will add an event in the Event Log explaining
+why the object could not be deleted. The message of the exception will also be displayed in the Administration
+application for content mangers to view.
 
 ## Custom Providers
 
