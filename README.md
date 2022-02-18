@@ -2,7 +2,7 @@
 
 ![Kentico Xperience](./images/kx-logo-by-kentico-hor-color-pos-sz-rgb.png)
 
-📑 [Read the Style Guide](https://romantic-wescoff-73e541.netlify.app/)
+📑 [Read the Style Guide](https://seangwright.github.io/kentico-xperience-13-style-guide/)
 
 This style guide is the result of observations that the Kentico Xperience community has on building applications with Xperience.
 
@@ -49,6 +49,6 @@ If you have a specific problem or feature suggestion, open an issue:
 
 ## Made With
 
-[VuePress 2](https://v2.vuepress.vuejs.org)
-[heroicons](https://heroicons.com/)
-[Netlify](https://www.netlify.com/)
+- [VuePress 2](https://v2.vuepress.vuejs.org)
+- [heroicons](https://heroicons.com/)
+- GitHub [Pages](https://pages.github.com/) and [Actions](https://github.com/features/actions)
