@@ -1,12 +1,17 @@
-import type { DefaultThemeOptions } from '@vuepress/theme-default';
+import { docsearchPlugin } from '@vuepress/plugin-docsearch';
+import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics';
+import { registerComponentsPlugin } from '@vuepress/plugin-register-components';
+import { shikiPlugin } from '@vuepress/plugin-shiki';
+import { defaultTheme } from '@vuepress/theme-default';
 import { path } from '@vuepress/utils';
-import { defineUserConfig } from 'vuepress';
+import { defineUserConfig, viteBundler } from 'vuepress';
 import { head } from './head';
-import { themeConfig } from './themeConfig';
+import { generateNavbar } from './navbar';
+import { generateSidebar } from './sidebar';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-export default defineUserConfig<DefaultThemeOptions>({
+export default defineUserConfig({
   base: '/kentico-xperience-13-style-guide/',
 
   lang: 'en-US',
@@ -16,46 +21,36 @@ export default defineUserConfig<DefaultThemeOptions>({
 
   head: head(),
 
-  themeConfig: themeConfig(isProd),
+  theme: defaultTheme({
+    logo: '/images/kx-logo-by-kentico-hor-color-pos-sz-rgb.png',
+    repo: 'seangwright/kentico-xperience-13-style-guide',
+    docsDir: 'docs',
+    navbar: generateNavbar(),
+    sidebar: generateSidebar(),
 
-  bundler:
-    // specify bundler via environment variable
-    process.env.DOCS_BUNDLER ??
-    // use vite in dev, use webpack in prod
-    (isProd ? '@vuepress/webpack' : '@vuepress/vite'),
+    editLink: true,
+    editLinkText: 'Edit this page on GitHub',
+
+    themePlugins: {
+      git: isProd,
+    },
+  }),
+
+  bundler: viteBundler({}),
 
   plugins: [
-    [
-      '@vuepress/plugin-docsearch',
-      {
-        apiKey: '3a539aab83105f01761a137c61004d85',
-        indexName: 'vuepress',
-        searchParameters: {
-          facetFilters: ['tags:v2'],
-        },
+    googleAnalyticsPlugin({ id: 'abc' }),
+    docsearchPlugin({
+      appId: '',
+      apiKey: '3a539aab83105f01761a137c61004d85',
+      indexName: 'vuepress',
+      searchParameters: {
+        facetFilters: ['tags:v2'],
       },
-    ],
-    [
-      '@vuepress/plugin-google-analytics',
-      {
-        // we have multiple deployments, which would use different id
-        id: 'abc',
-      },
-    ],
-    [
-      '@vuepress/plugin-register-components',
-      {
-        componentsDir: path.resolve(__dirname, './components'),
-      },
-    ],
-    // only enable shiki plugin in production mode
-    [
-      '@vuepress/plugin-shiki',
-      isProd
-        ? {
-            theme: 'dark-plus',
-          }
-        : false,
-    ],
+    }),
+    registerComponentsPlugin({
+      componentsDir: path.resolve(__dirname, './components'),
+    }),
+    isProd ? shikiPlugin({ theme: 'dark-plus' }) : [],
   ],
 });
