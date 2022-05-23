@@ -131,8 +131,60 @@ To learn more about how to organize and maintain a `Startup.cs` file, read [Kent
 
 ### <ConsiderIcon /> Group Extensions Based on Sub-System
 
-- Extensions tell a story about what features your app has
+- Create separate static configuration classes for each area of functionality in an application
+- Create separate static `IServiceCollection` extension methods in those classes for each group of dependencies within a feature
+
+**Why?**
+
+These extensions tell a story about what features and dependencies your app has. With these extension classes and methods, looking at `Startup.cs` will quickly show what kinds of things an application does.
+
+Examples:
+
+```csharp
+public static class ECommerceConfiguration
+{
+    public static IServiceCollection AddEcommerce(this IServiceCollection services) =>
+        services
+            .AddStripe();
+
+    private static IServiceCollection AddStripe(this IServiceCollection services)
+    {
+        // ...
+    }
+}
+
+public static class ApplicationConfiguration
+{
+    public static IServiceCollection AddApplicationCore(this IServiceCollection services) =>
+        services
+            .AddXMLSitemaps();
+
+    private static IServiceCollection AddXMLSitemaps(this IServiceCollection services)
+    {
+        // ...
+    }
+}
+
+public static class IntegrationConfiguration
+{
+    public static IServiceCollection AddLegacyIntegration(this IServiceCollection services) =>
+        services
+            .AddActiveDirectory();
+
+    public static IServiceCollection AddActiveDirectory(this IServiceCollection services)
+    {
+        // ...
+    }
+}
+```
 
 ### <EssentialIcon /> Use Reflection vs Manual DI Registration
 
 - Use reflection for registering types with many implementations
+- Use a library like [Scrutor](https://github.com/khellang/Scrutor) for more powerful DI registration
+
+**Why?**
+
+One of the benefits of a DI conatiner is its ability to construct types for you through its access to all
+constructable types in an application.
+To fully take advantage of Dependency Injection
