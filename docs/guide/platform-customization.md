@@ -169,6 +169,12 @@ these values are not accidentally changed by the application and gives them frie
 Creating an `All` property makes it easy to programmatically check all the static class instance properties. This is helpful
 for guarding against accidental deletion of objects the application requires to function correctly (see [Protect Required Data from Deletion](#protect-required-data-from-deletion))
 
+::: tip
+
+For an example and more detailed explanation, see the blog post [Kentico Xperience Design Patterns: Protecting Hard Coded Identifiers](https://dev.to/seangwright/kentico-xperience-design-patterns-protecting-hard-coded-identifiers-4f88) and NuGet package [Xperience Page Link Tag Helpers](https://github.com/wiredviews/xperience-page-link-tag-helpers/).
+
+:::
+
 ### <EssentialIcon /> Protect Required Data from Deletion
 
 - In a [Custom Module](https://docs.xperience.io/custom-development/creating-custom-modules) handle the Delete [Global Events](https://docs.xperience.io/custom-development/handling-global-events/reference-global-system-events) for a type that the system depends on
@@ -223,3 +229,52 @@ application for content mangers to view.
 
 - Centralizes customizations
 - Inheritance model means composition is difficult
+
+### <ConsiderIcon /> Register Xperience Customizations in applications
+
+- Create a dependency management class in each application project.
+- When creating Custom Modules, Providers, or Decorated services, register them in a single place in each Application project (the dependency class).
+- Avoid registering these types in the same file they are defined in, and also in any library project.
+
+```csharp
+// Library/MyModule.cs
+namespace Sandbox.Xperience.Common
+{
+    public class MyModule : Module
+    {
+        public MyModuleModule() : base(nameof(MyModuleModule)) { }
+
+        protected override void OnInit()
+        {
+            base.OnInit();
+
+            // ...
+        }
+    }
+}
+```
+
+```csharp
+// App/Configuration/XperienceDpendencies.cs
+[assembly: RegisterModule(typeof(MyModule))]
+[assembly: RegisterModule(typeof(...))]
+[assembly: RegisterModule(typeof(...))]
+```
+
+**Why?**
+
+Kentico Xperience's [custom modules](https://docs.xperience.io/custom-development/creating-custom-modules/initializing-modules-to-run-custom-code) are a powerful tool for customizing the platform. These types, along with [custom providers](https://docs.xperience.io/custom-development/customizing-providers) and [decorated system services](https://docs.xperience.io/custom-development/decorating-system-services) give developers plenty of flexibility for customizations. However, we cannot 'register' these customizations using the same dependency injection (DI) approach as we do with an ASP.NET Core application.
+
+**Why?**
+
+Xperience has its own DI container interally and this container initializes itself _before_ ASP.NET Core - during the custom module `PreInit()` method call, so we cannot customize types in this container without using its API - the `[assembly: ...]` attribute.
+
+These [attributes](https://docs.xperience.io/custom-development/customizing-providers/registering-providers-using-assembly-attributes) are often displayed above the class that is being registered. If this class is in a class library, any consumer (like a console app) of this class library will automatically have all types registered that are defined in the library - there's no way to opt-out.
+
+**Why?**
+
+By defining type registerations in an application, we leave it up to each library consumer to choose if they want to include a customization. Yes, this means enabling a customization takes more work, but it provides signficantly more flexibility. This also means consuming applications can compose/fully replace a customization.
+
+**Why?**
+
+Creating a dependency management class in each project provides a central location to check for and register all Kentico Xperience related dependencies.
