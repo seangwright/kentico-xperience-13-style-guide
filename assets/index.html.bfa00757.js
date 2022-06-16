@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-fffb8e28","path":"/guide/","title":"Introduction","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1641663318000,"contributors":[{"name":"Sean Wright","email":"sean@wiredviews.com","commits":2},{"name":"Sean Wright","email":"sean@seangwright.me","commits":1}]},"filePathRelative":"guide/README.md"}');export{e as data};

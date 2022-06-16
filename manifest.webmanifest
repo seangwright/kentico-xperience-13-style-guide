@@ -1,0 +1,21 @@
+{
+  "name": "Kentico Xperience 13 Community Style Guide",
+  "short_name": "KX13 Style Guide",
+  "description": "The result of observations that the Kentico Xperience community has on building applications with Xperience",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#3eaf7c",
+  "icons": [
+    {
+      "src": "/images/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icons/android-chrome-315x315.png",
+      "sizes": "315x315",
+      "type": "image/png"
+    }
+  ]
+}

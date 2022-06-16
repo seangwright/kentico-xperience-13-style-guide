@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-4d29b930","path":"/guide/page-builder.html","title":"Page Builder","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1633643560000,"contributors":[{"name":"Sean Wright","email":"sean@seangwright.me","commits":1}]},"filePathRelative":"guide/page-builder.md"}');export{e as data};
